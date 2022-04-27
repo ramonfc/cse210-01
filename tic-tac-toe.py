@@ -61,7 +61,7 @@ def put_value(matrix, i, j, value):
 
 def ask_input(player):
     return int(input(f"{player}'s turn to choose a square (1-9): "))
-    
+
 
 def comparision(to_compare):    
     if to_compare == "xxx" or to_compare == "ooo":
@@ -73,7 +73,7 @@ def is_winner(matrix):
     for j in range(len(matrix)):
         by_column = "".join(list(map(str, [val[j] for val in matrix]))) 
         by_row = "".join(list(map(str, matrix[j])))
-        by_main_diag = "".join(list(map(str, [matrix[index][index] for index in range(len(matrix))])))
+        by_main_diag = "".join(list(map(str, [diag[index] for index, diag in enumerate(matrix)])))
         if comparision(by_column) or comparision(by_row) or comparision(by_main_diag):
             won = True
             break
