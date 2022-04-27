@@ -74,12 +74,27 @@ def is_winner(matrix):
         by_column = "".join(list(map(str, [val[j] for val in matrix]))) 
         by_row = "".join(list(map(str, matrix[j])))
         by_main_diag = "".join(list(map(str, [diag[index] for index, diag in enumerate(matrix)])))
-        if comparision(by_column) or comparision(by_row) or comparision(by_main_diag):
+        by_sec_diag = "".join(list(map(str, [diag[len(matrix) -1 - index] for index, diag in enumerate(matrix)])))
+        if comparision(by_column) or comparision(by_row) or comparision(by_main_diag) or comparision(by_sec_diag):
             won = True
             break
         else:
             continue    
     return won
+
+
+
+def all_type_str(matrix):
+    counter = 0
+    rows = len(matrix)
+    cols = len(matrix[0])
+    for i in range(rows):
+        for j in range(cols):
+            if type(matrix[i][j]) == str:
+                counter += 1
+    return counter == rows * cols
+    
+
 
 def main():
     m = [[1,2,3], [4,5,6], [7,8,9]]
@@ -87,6 +102,7 @@ def main():
 
     won = False
     count = 1
+    
     while won == False:
         if count % 2 == 0:
             player = "o"
@@ -97,11 +113,14 @@ def main():
         i, j = find_position(m, selected)
         if i != None and j != None:
             put_value(m, i, j, player)            
-            won = is_winner(m)
+            won = is_winner(m)            
         show_matrix(m)
-    
-        count += 1
+        
+        if all_type_str(m):
+                break
 
+        count += 1
+    print("Good game. Thanks for playing!")
 
 
 if __name__ == "__main__":
