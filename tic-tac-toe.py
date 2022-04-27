@@ -11,10 +11,6 @@ If all nine squares are full and neither player has three in a row, the game end
 """
 
 
-
-from numpy import matrix
-
-
 def show_matrix(matrix):
     """
     Given a list of list (matrix) return a formated string with the matrix values:
@@ -65,20 +61,25 @@ def put_value(matrix, i, j, value):
 
 def ask_input(player):
     return int(input(f"{player}'s turn to choose a square (1-9): "))
+    
+
+def comparision(to_compare):    
+    if to_compare == "xxx" or to_compare == "ooo":
+        return True           
 
 
-def win_by_row(matrix):
+def is_winner(matrix):
     won = False
-    for row in matrix:
-        to_compare = "".join(map(str, row))
-        if to_compare == "xxx" or to_compare == "ooo":
+    for j in range(len(matrix)):
+        by_column = "".join(list(map(str, [val[j] for val in matrix]))) 
+        by_row = "".join(list(map(str, matrix[j])))
+        by_main_diag = "".join(list(map(str, [matrix[index][index] for index in range(len(matrix))])))
+        if comparision(by_column) or comparision(by_row) or comparision(by_main_diag):
             won = True
             break
         else:
-            continue
+            continue    
     return won
-        
-
 
 def main():
     m = [[1,2,3], [4,5,6], [7,8,9]]
@@ -95,8 +96,8 @@ def main():
         
         i, j = find_position(m, selected)
         if i != None and j != None:
-            put_value(m, i, j, player)
-            won = win_by_row(m)
+            put_value(m, i, j, player)            
+            won = is_winner(m)
         show_matrix(m)
     
         count += 1
@@ -105,3 +106,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+    
